@@ -1,0 +1,105 @@
+<div class="col-md-6 offset-sm-3 col-12" style="margin-top: 10px;">
+    <h1 class="text-center" style="color: #565FA7; margin-bottom: 5px;"><strong>COMPANY COMPARISON</strong></h1>
+    <P style="color: #565FA7;" ><strong>Select time range:</strong></P>
+    <form #compareForm="ngForm" (ngSubmit)="onSubmit(compareForm)">
+      <div class="card">
+          <div class="card-body">
+              <div class="form-group form-row">
+                  <label class="col-form-label col-3">Specific time range: </label>
+                  <div class="col">
+                      <div ngbDropdown class="d-inline-block">
+                        <select name="periodicity" id="periodicity" [(ngModel)]="periodicity" class="form-control">
+                          <option value="0">Week</option>
+                          <option value="1">Month</option>
+                          <option value="2">Quarter</option>
+                          <option value="3">Year</option>
+                        </select>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group form-row">
+                  <label class="col-form-label col-3">From peried: </label>
+                  <div class="col-9">
+                      <form class="form-inline">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <input class="form-control" placeholder="yyyy-mm-dd"
+                                    name="dp1" [(ngModel)]="modelfrom" ngbDatepicker #dp1="">
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-secondary calendar" (click)="dp1.toggle()" type="button"></button>
+                              </div>
+                            </div>
+                          </div>
+                      </form>
+                  </div>
+              </div> 
+              <div class="form-group form-row">
+                  <label class="col-form-label col-3">To peried: </label>
+                  <div class="col-9">
+                      <form class="form-inline">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <input class="form-control" placeholder="yyyy-mm-dd"
+                                     name="dp2" [(ngModel)]="modelto" ngbDatepicker #dp2="">
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-secondary calendar" (click)="dp2.toggle()" type="button"></button>
+                              </div>
+                            </div>
+                          </div>
+                      </form>
+                  </div>
+              </div> 
+              
+          </div>
+      </div>
+      <P style="color: #565FA7;margin-top: 20px;" ><strong>Select Comoany/Sector:</strong></P>
+      <div class="card">
+          <div class="card-body">
+            <div *ngFor="let item of items">
+              <div class="form-group form-row">
+                  <label class="col-form-label col-3">Select Company1/Sector1: </label>
+                  <div class="col">
+                      <div ngbDropdown class="d-inline-block">
+                        <select id="type{{item}}" class="form-control" name="type{{item}}" ngModel>
+                          <option value="0">Company</option>
+                          <option value="1">Sector</option>
+                        </select>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group form-row">
+                  <label class="col-form-label col-3">Select Stock Exchange1: </label>
+                  <div class="col">
+                      <div ngbDropdown class="d-inline-block">
+                        <select id="stockexchange{{item}}" class="form-control" name="stockexchange{{item}}" ngModel>
+                          <option selected>BSE</option>
+                          <option>NSE</option>
+                        </select>
+                      </div>
+                  </div>
+              </div>
+              <div class="form-group form-row">
+                  <label class="col-form-label col-3">Company code: </label>
+                  <input type="text" class="form-control" id="companyname{{item}}" name="companyname{{item}}" ngModel>
+              </div>
+              <div class="d-flex justify-content-end">
+                <button type="button" *ngIf="items.length>1" class="btn btn-sm btn-outline-secondary mr-2" (click)="delCompany()">Remove</button>
+                <button type="button"  class="btn btn-sm btn-outline-secondary" (click)="addCompany()">Add</button>
+              </div>
+        </div>
+      </div> 
+    </div> 
+    <div class="text-center">
+        <button class="btn btn-primary col-6" type="submit" style="background-color: #565FA7;color: white; margin-top: 30px; font-size:20px;">Generate Map</button>
+    </div> 
+  </form>
+  <br>
+  <br>
+  <br>
+  <div echarts [options]="options" class="demo-chart"></div>
+</div>
+
+
+
+
+

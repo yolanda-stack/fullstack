@@ -1,0 +1,104 @@
+<!-- 
+<div class="col-md-6 offset-sm-3 col-12" style="margin-top: 100px;"> -->
+<main role="main" class="col-md-6 offset-sm-4 col-12">
+    <h1 class="text-center" style="color: #565FA7; margin-bottom: 50px;"><strong>UPDATE IPO DETAILS</strong></h1>
+    <form>
+      <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Company Name</th>
+            <th scope="col">Stock Exchange</th>
+            <th scope="col">Pice</th>
+            <th scope="col">Total</th>
+            <th scope="col">Open Date</th>
+            <th scope="col">Remarks</th>
+            <th scope="col">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ipodetail of ipodetails$ | async">
+              <th scope="row">{{ ipodetail.id }}</th>
+              <td><ngb-highlight [result]="ipodetail.companyname"></ngb-highlight></td>
+              <td><ngb-highlight [result]="ipodetail.stockexchanges"></ngb-highlight></td>
+              <td><ngb-highlight [result]="ipodetail.price"></ngb-highlight></td>
+              <td><ngb-highlight [result]="ipodetail.total"></ngb-highlight></td>
+              <td><ngb-highlight [result]="ipodetail.opendate"></ngb-highlight></td>
+              <td><ngb-highlight [result]="ipodetail.remarks"></ngb-highlight></td>
+              <td><button class="btn btn-sm btn-outline-secondary" type="button" (click)="open(content,ipodetail.id)">Edit</button></td>
+            </tr>
+          </tbody> 
+        </table>
+        <div class="d-flex justify-content-between p-2">
+          <ngb-pagination
+            [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
+          </ngb-pagination>
+      
+          <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+            <option [ngValue]="2">2 items per page</option>
+            <option [ngValue]="4">4 items per page</option>
+            <option [ngValue]="6">6 items per page</option>
+          </select>
+        </div>
+    </form>
+    <ng-template #content let-modal let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Update IPO</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #ipoForm="ngForm" (ngSubmit)="onSubmit(ipoForm)">
+          <div class="form-group row">
+            <label for="companyname" class="col-sm-3 col-form-label">Company Name:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="companyname" name="companyname" [(ngModel)]="ipodetail.companyname" readonly>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="stockexchange" class="col-sm-3 col-form-label">Stock Exchanges:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="stockexchange" name="stockexchange" [(ngModel)]="ipodetail.stockexchanges" readonly>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="pricepershare" class="col-sm-3 col-form-label">Price Per Share:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="pricepershare" name="pricepershare" [(ngModel)]="ipodetail.price">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="totalnum" class="col-sm-3 col-form-label">Total Number Of Shares:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="totalnum" name="totalnum" [(ngModel)]="ipodetail.total">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="opendate" class="col-sm-3 col-form-label">Open Date Time:</label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd"
+                       name="opendate" [(ngModel)]="ipodetail.opendate" ngbDatepicker #opendate="ngbDatepicker" placement="bottom-left">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary calendar" (click)="opendate.toggle()" type="button"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="remarks" class="col-sm-3 col-form-label">Remarks:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="remarks" name="remarks" [(ngModel)]="ipodetail.remarks">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="c('Cancel click')">Cancel</button>
+            <button type="submit" class="btn btn-outline-dark" >Save</button>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+<!-- </div> -->
+</main>
+

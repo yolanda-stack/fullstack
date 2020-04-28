@@ -1,0 +1,141 @@
+
+<!-- <div class="col-md-8 offset-sm-2 col-12" style="margin-top: 100px;"> -->
+<main role="main" class="col-md-6 offset-sm-4 col-12"> 
+    <h1 class="text-center" style="color: #565FA7; margin-bottom: 50px;"><strong>MANAGERMENT COMPANY</strong></h1>
+  
+    <form>
+      <div class="form-group form-inline" style="margin-bottom: 30px ;">
+          Company name search: <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="service.searchTerm"/>
+          <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span>
+      </div>
+
+      <div class="text-right">
+        <button class="btn btn-primary" style="background-color: #565FA7; margin-bottom: 15px;" type="submit" (click)="open(content)">+Add</button>      
+    </div>
+
+    <!-- <div id="buttonDiv">
+      <button type="button"  class="btn btn-sm btn-outline-secondary" (click)="open(content);">Add</button>
+    </div> -->
+
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Add a new company</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #companyForm="ngForm" (ngSubmit)="onSubmit(companyForm)">
+            <div class="form-group row">
+              <label for="companyname" class="col-sm-3 col-form-label">Company Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="companyname" name="companyname" [(ngModel)]="_company.companyname" required>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="turnover" class="col-sm-3 col-form-label">Turnover:</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="turnover" name="turnover" [(ngModel)]="_company.turnover">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="ceo" class="col-sm-3 col-form-label">CEO:</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="ceo" name="ceo" [(ngModel)]="_company.ceo">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="directors" class="col-sm-3 col-form-label">Boards of Directors:</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="directors" name="directors" [(ngModel)]="_company.directors">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="stockexchanges" class="col-sm-3 col-form-label">Listed in Stockexchanges:</label>
+              <div class="col-sm-9">
+                <select id="stockexchanges" name="stockexchanges" class="form-control" [(ngModel)]="_company.stockexchanges">
+                  <option value="Y">Yes</option>
+                  <option value="N">No</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="sector" class="col-sm-3 col-form-label">Sector:</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="sector" name="sector" [(ngModel)]="_company.sector">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="brief" class="col-sm-3 col-form-label">Brief:</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="brief" name="brief" [(ngModel)]="_company.brief">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="stockcode" class="col-sm-3 col-form-label">Stock Code:</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="stockcode" name="stockcode" [(ngModel)]="_company.stockcode">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="companystatus" class="col-sm-3 col-form-label">Company Status:</label>
+              <div class="col-sm-9">
+                <select id="companystatus" class="form-control" name="companystatus" [(ngModel)]="_company.companystatus">
+                  <option value="1">Active</option>
+                  <option value="0">Inactive</option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-outline-dark" (click)="c('Cancel click');">Cancel</button> -->
+              <button type="submit" class="btn btn-outline-dark">Save</button>
+            </div>
+        </form>
+      </div>      
+    </ng-template>
+    
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Company Name</th>
+          <th scope="col">Turnover</th>
+          <th scope="col">CEO</th>
+          <th scope="col">Directors</th>
+          <th scope="col">Stock Exchanges</th>
+          <th scope="col">Sector</th>
+          <th scope="col">Brief</th>
+          <th scope="col">Stock code </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let company of companies$ | async">
+          <th scope="row">{{ company.id }}</th>
+          <td>
+            <ngb-highlight [result]="company.companyname" [term]="service.searchTerm"></ngb-highlight>
+          </td>
+          <td><ngb-highlight [result]="company.turnover" [term]="service.searchTerm"></ngb-highlight></td>
+          <td><ngb-highlight [result]="company.ceo " [term]="service.searchTerm"></ngb-highlight></td>
+          <td><ngb-highlight [result]="company.directors " [term]="service.searchTerm"></ngb-highlight></td>
+          <td><ngb-highlight [result]="company.stockexchanges " [term]="service.searchTerm"></ngb-highlight></td>
+          <td><ngb-highlight [result]="company.sector " [term]="service.searchTerm"></ngb-highlight></td>
+          <td><ngb-highlight [result]="company.stockcode " [term]="service.searchTerm"></ngb-highlight></td>
+          <td><button class="btn btn-sm btn-outline-secondary" type="button" (click)="edit(company.id,content)">Edit</button></td>
+        </tr>
+        </tbody>
+      </table>
+    
+      <div class="d-flex justify-content-between p-2">
+        <ngb-pagination
+          [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
+        </ngb-pagination>
+    
+        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+          <option [ngValue]="2">2 items per page</option>
+          <option [ngValue]="4">4 items per page</option>
+          <option [ngValue]="6">6 items per page</option>
+        </select>
+      </div>    
+    </form>
+<!-- </div> -->
+</main>
